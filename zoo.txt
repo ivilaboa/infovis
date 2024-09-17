@@ -1,1 +1,25 @@
-Node-link diagrams
+Index Chart
+Stacked Graph
+Small Multiples
+Horizon Graph
+Stem-and-Leaf Plot
+Q-Q Plot (Quantile-Quantile Plot)
+SPLOM (Scatter Plot Matrix)
+Parallel Coordinates
+Flow Map
+Choropleth Map
+Graduated Symbol Map
+Cartogram
+Dorling Cartogram
+Node-Link Diagram
+Dendrogram
+Indented Tree
+Adjacency Diagram
+Icicle Layout
+Sunburst Layout
+Enclosure Diagram
+Treemap
+Circle-Packing Layout
+Force-Directed Layout
+Arc Diagram
+Matrix View
