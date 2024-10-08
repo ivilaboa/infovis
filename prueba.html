@@ -8,48 +8,71 @@
 <body>
     <canvas id="myChart" width="400" height="200"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['6:00', '12:00', '18:00'],
-                datasets: [
-                    {
-                        label: '10/29',
-                        data: [1, 2, 2],
-                        borderColor: 'black',
-                        fill: false,
-                        pointBackgroundColor: 'black',
-                        pointRadius: 5,
-                    },
-                    {
-                        label: '10/30',
-                        data: [1, 2, 2],
-                        borderColor: 'black',
-                        fill: false,
-                        pointBackgroundColor: 'black',
-                        pointRadius: 5,
+        // URL del archivo CSV
+        const csvUrl = 'https://raw.githubusercontent.com/ivilaboa/infovis/main/Ivan.xlsx%20-%20SUBE.csv';
+
+        // Función para procesar los datos del CSV
+        Papa.parse(csvUrl, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const data = results.data;
+                const labels = [];
+                const datasets = {};
+
+                data.forEach(entry => {
+                    const date = new Date(entry['Fecha y hora']);
+                    const day = date.toLocaleDateString();
+                    const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                    if (!labels.includes(time)) {
+                        labels.push(time);
                     }
-                ]
-            },
-            options: {
-                scales: {
-                    y: {
-                        type: 'category',
-                        labels: ['LINEA A', 'LINEA E'],
-                        title: {
-                            display: true,
-                            text: 'DÍA'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'HORA'
+
+                    if (!datasets[day]) {
+                        datasets[day] = {
+                            label: day,
+                            data: [],
+                            borderColor: 'black',
+                            fill: false,
+                            pointBackgroundColor: 'black',
+                            pointRadius: 5,
+                        };
+                    }
+
+                    datasets[day].data.push(entry['Medio']);
+                });
+
+                const chartData = {
+                    labels: labels,
+                    datasets: Object.values(datasets)
+                };
+
+                const ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: chartData,
+                    options: {
+                        scales: {
+                            y: {
+                                type: 'category',
+                                labels: ['LINEA A', 'LINEA E'],
+                                title: {
+                                    display: true,
+                                    text: 'DÍA'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'HORA'
+                                }
+                            }
                         }
                     }
-                }
+                });
             }
         });
     </script>
