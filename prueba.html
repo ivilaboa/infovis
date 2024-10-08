@@ -36,16 +36,16 @@
                         if (!datasets[day]) {
                             datasets[day] = {
                                 label: day,
-                                data: Array(labels.length).fill(null),
+                                data: [],
                                 borderColor: 'black',
                                 fill: false,
                                 pointBackgroundColor: 'black',
                                 pointRadius: 5,
+                                showLine: false
                             };
                         }
 
-                        const index = labels.indexOf(time);
-                        datasets[day].data[index] = medio;
+                        datasets[day].data.push({ x: time, y: day, label: medio });
                     }
                 });
 
@@ -56,9 +56,18 @@
 
                 const ctx = document.getElementById('myChart').getContext('2d');
                 new Chart(ctx, {
-                    type: 'line',
+                    type: 'scatter',
                     data: chartData,
                     options: {
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.raw.label;
+                                    }
+                                }
+                            }
+                        },
                         scales: {
                             y: {
                                 type: 'category',
