@@ -27,6 +27,7 @@
                         const date = new Date(entry['Fecha y hora']);
                         const day = date.toLocaleDateString();
                         const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        const medio = entry['Medio'];
 
                         if (!labels.includes(time)) {
                             labels.push(time);
@@ -35,7 +36,7 @@
                         if (!datasets[day]) {
                             datasets[day] = {
                                 label: day,
-                                data: [],
+                                data: Array(labels.length).fill(null),
                                 borderColor: 'black',
                                 fill: false,
                                 pointBackgroundColor: 'black',
@@ -43,7 +44,8 @@
                             };
                         }
 
-                        datasets[day].data.push(entry['Medio']);
+                        const index = labels.indexOf(time);
+                        datasets[day].data[index] = medio;
                     }
                 });
 
