@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Uso</title>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['6:00', '12:00', '18:00'],
+                datasets: [
+                    {
+                        label: '10/29',
+                        data: [1, 2, 2],
+                        borderColor: 'black',
+                        fill: false,
+                        pointBackgroundColor: 'black',
+                        pointRadius: 5,
+                    },
+                    {
+                        label: '10/30',
+                        data: [1, 2, 2],
+                        borderColor: 'black',
+                        fill: false,
+                        pointBackgroundColor: 'black',
+                        pointRadius: 5,
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        type: 'category',
+                        labels: ['LINEA A', 'LINEA E'],
+                        title: {
+                            display: true,
+                            text: 'DÍA'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'HORA'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
